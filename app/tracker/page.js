@@ -83,7 +83,7 @@ export default function TrackerPage() {
         setYearlyGoals(prev => prev.filter((_, i) => i !== index));
     };
 
-    const growthStages = ["seed.png", "sapling.png", "small-tree.png"];
+    const growthStages = ["seed.png", "sprout.png", "sapling.png"];
     const getTreeStage = (pts) => {
         if (pts < 50) return growthStages[0];
         if (pts < 150) return growthStages[1];
@@ -96,11 +96,16 @@ export default function TrackerPage() {
 
     return (
         <div className="min-h-screen bg-white text-black p-6">
-            <header className="mb-6">
+            {/* Navigation */}
+            <header className="mb-6 bg-white rounded-2xl ">
                 <div className="flex items-center justify-between max-w-4xl mx-auto">
-                    <img src="/images/logo.png" alt="logo" className="w-32 h-auto" />
-                    <nav>
-                        <ul className="flex items-center gap-4 text-black">
+
+                    {/* Logo */}
+                    <img src="/images/logo.png" alt="logo" className="w-32 h-45" />
+
+                    {/* pages */}
+                     <nav className="bg-emerald-500 rounded-2xl margin p-2">
+                        <ul className="flex items-center gap-4 text-gray-900 ">
                             <li className="hover:font-bold hover:underline">
                                 <a href="/home"> Home</a>
                             </li>
@@ -119,9 +124,9 @@ export default function TrackerPage() {
             </header>
 
             <main className="max-w-4xl mx-auto">
-                {/* stats + tree */}
-                <div className="flex items-center gap-6 mb-6">
-                    <div className="bg-amber-200 drop-shadow-lg rounded-lg px-4 py-6 w-64">
+                <div className="flex items-center gap-56 mb-6">
+                    {/* card */}
+                    <div className="bg-amber-100 drop-shadow-lg rounded-lg px-4 py-6 w-64">
                         <div className="mb-2">Username: <strong>JoeRedd</strong></div>
                         <div className="mb-2">Experience: <strong>0 XP</strong></div>
                         <div className="mb-2">Points: <strong>{points}</strong></div>
@@ -133,8 +138,8 @@ export default function TrackerPage() {
                         </button>
                     </div>
 
+                    {/* display tree */}
                     <div>
-                        {/* ensure images exist in /public/images */}
                         <Image
                             src={`/images/${getTreeStage(points)}`}
                             width={150}
@@ -196,7 +201,7 @@ export default function TrackerPage() {
                 </section>
 
                 <div className="mt-6 text-lg font-semibold">Total Points: {points}</div>
-            </main>
-        </div>
+            </main >
+        </div >
     );
 }
