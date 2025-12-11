@@ -104,7 +104,7 @@ export default function TrackerPage() {
                             <li className="hover:font-bold hover:underline">
                                 <a href="/home"> Home</a>
                             </li>
-                            <li className="">
+                            <li className="font-bold">
                                 <Link href="#" className="font-bold">Tracker</Link>
                             </li>
                             <li className="hover:font-bold hover:underline">
