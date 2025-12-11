@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function EcoPage() {
     const [query, setQuery] = useState("");
@@ -113,8 +114,29 @@ export default function EcoPage() {
         <div className="min-h-screen bg-slate-50 text-slate-900 p-6">
             <header className="max-w-3xl mx-auto">
                 <div className="flex items-center justify-between mb-6">
-                    <img src="/images/logo.png" alt="logo" className="w-28 h-auto" />
-                    <h1 className="text-2xl font-semibold">Eco Insights — Air & UV</h1>
+                    <div className="flex items-center gap-4">
+                        <img src="/images/logo.png" alt="logo" className="w-28 h-auto" />
+                        <h1 className="text-2xl font-semibold">Eco Insights — Air & UV</h1>
+                    </div>
+                    <nav>
+                        <ul className="flex items-center gap-4 text-sm">
+                            <li>
+                                <Link href="/home" className="hover:underline">Home</Link>
+                            </li>
+                            <li>
+                                <Link href="/tracker" className="hover:underline">Tracker</Link>
+                            </li>
+                            <li>
+                                <Link href="/eco" className="font-semibold underline">Eco-Insights</Link>
+                            </li>
+                            <li>
+                                <Link href="/profile" className="hover:underline">Profile</Link>
+                            </li>
+                            <li>
+                                <Link href="/login" className="hover:underline">Login</Link>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
 
                 <div className="bg-white shadow rounded-lg p-4 mb-6">
