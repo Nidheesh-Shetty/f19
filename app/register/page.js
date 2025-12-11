@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
     return (
@@ -32,13 +33,14 @@ export default function Home() {
                     />
 
 
-
-                    <button
-                        type="button"
-                        className="bg-green-500 text-white rounded-lg hover:bg-green-600 w-full px-2 py-1 mt-5 focus:outline-none focus:ring focus:border-blue-500"
-                    >
-                        Submit to database
-                    </button>
+                    <Link href="/login">
+                        <button
+                            type="button"
+                            className="bg-green-500 text-white rounded-lg hover:bg-green-600 w-full px-2 py-1 mt-5 focus:outline-none focus:ring focus:border-blue-500"
+                        >
+                            register
+                        </button>
+                    </Link>
                 </form>
             </div>
         </div>
