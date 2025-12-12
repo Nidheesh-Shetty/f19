@@ -1,29 +1,32 @@
 import { sql } from "@lib/db.js"
-import Error from "next/error"
-
-class LoginError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = "LoginError";
-  }
-}
-
+import { NextResponse } from "next/server";
 
 export async function login(info){
-    const{username, password} = info.json()
+    const{username, password} = await info.json()
     const users = await sql`
     SELECT * FROM accounts
     WHERE username = ${username}
     LIMIT 1
     `
-    if (users.length() = 0){
-        throw new LoginError("No User Found")
+    if (users.length = 0){
+        return NextResponse.json({
+          "success": false,
+          "message": "No user found"
+        })
+
     }
-    if(users[0].password=password){
-        return true
+    if(users[0].password===password){
+        return NextResponse.json({
+          "success": true,
+          "message": "Logging in"
+        })
+
     }
     else{
-        throw new LoginError("Incorrect Password")
+        return NextResponse.json({
+          "success": false,
+          "message": "Incorrect password"
+        })
     }
     
 

@@ -1,11 +1,5 @@
 import { sql } from "@lib/db.js"
-
-class RegistrationError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = "RegistrationError";
-  }
-}
+import { NextResponse } from "next/server";
 
 export async function registration(info){
     const {username, password} =  await info.json()
@@ -16,17 +10,26 @@ export async function registration(info){
         LIMIT 1
         `
         if(users.length>0){
-            throw new RegistrationError("username already exists")
+            return NextResponse.json({
+            "success": false,
+            "message": "Username already exists"
+            })
         }
-        const user = await sql`
+        await sql`
         INSERT INTO accounts(username, password)
         VALUES ( ${username},${password})
         RETURNING id, username
-        `
-        return Response.json({user: user[0] });
+        ` 
+        return NextResponse.json({
+            "success": true,
+            "message": "success"
+            })
     }
-    catch(error){
-        return RegistrationError("Error with Database")
+    catch(err){
+        return NextResponse.json({
+      success: false,
+      message: "Database error"
+      });
 
     }
 
