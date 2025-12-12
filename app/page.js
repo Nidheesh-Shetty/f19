@@ -29,16 +29,10 @@ export default function LandingPage() {
         {/* CTA Buttons */}
         <div className="mt-8 flex gap-4 flex-wrap justify-center">
           <a
-            href="/login"
+            href="/home"
             className="px-6 py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition"
           >
-            Login
-          </a>
-          <a
-            href="/register"
-            className="px-6 py-3 bg-white text-green-800 font-semibold rounded-xl hover:bg-gray-100 transition"
-          >
-            Register
+            into dashbaord!
           </a>
         </div>
 

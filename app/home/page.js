@@ -691,7 +691,7 @@ export default function Home() {
                                     {open && (
                                         <div className="flex items-start justify-between w-full">
                                             <div>
-                                                <div className="mb-2">👤Username: <strong>JoeRedd</strong></div>
+                                                <div className="mb-2">👤Username: <strong>You</strong></div>
                                                 <div className="mb-2">Experience: {experience}<strong><div className="w-full bg-gray-200 h-2 rounded-full mt-2">
                                                     <div className="bg-green-500 h-2 rounded-full" style={{ width: `${progressPercent}%` }}></div>
                                                 </div></strong></div>
