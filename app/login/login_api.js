@@ -1,4 +1,4 @@
-import { sql } from "@lib/db.js"
+import { sql } from "../../lib/db.js"
 import { NextResponse } from "next/server";
 
 export async function POST(info){
