@@ -23,7 +23,7 @@ export default function InteractiveBackground() {
       for (let x = 0; x < width; x += dotSpacing) {
         const dot = document.createElement("div");
         dot.className =
-          "absolute w-1 h-1 rounded-full bg-blue-400 pointer-events-none transition-opacity duration-200";
+          "absolute w-1 h-1 rounded-full bg-emerald-900 pointer-events-none transition-opacity duration-200";
         const offsetX = (Math.floor(y / dotSpacing) % 2 === 0) ? dotSpacing / 2 : 0;
         dot.style.left = `${x + offsetX}px`;
         dot.style.top = `${y}px`;
