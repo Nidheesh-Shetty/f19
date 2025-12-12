@@ -1,3 +1,4 @@
+# Instrctions:
 1) Open the github repo
 2) Open vs codes
 3) Open a folder of your choice
