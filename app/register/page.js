@@ -12,13 +12,14 @@ export default function Home() {
     async function userRegister(e) {
         e.preventDefault();
 
-        const response = await fetch("/register/register_api.js", {
+
+        const response = await fetch("/register", {
         method: "POST",
         body: JSON.stringify({username,password}),
         });
-        data=await response.json()
+        const data=await response.json()
         if(data.success){
-        router.push("/login/login.js");
+        router.push("/login");
         }else{
             alert(data.message)
         }
@@ -54,7 +55,7 @@ export default function Home() {
 
                     <label htmlFor="present" className="text-black">password</label>
                     <input
-                        type="text"
+                        type="password"
                         name="present"
                         id="present"
                         className="border border-gray-300 rounded p-1 text-sm w-full mb-4 text-black"

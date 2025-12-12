@@ -9,15 +9,16 @@ export default function Home() {
     const router = useRouter();
     const [username,enterUsername]=useState("")
     const [password,enterPassword]=useState("")
-    async function userLogin() {
+    async function userLogin(e) {
+        e.preventDefault();
 
-        const response = await fetch("/login/login_api.js", {
+        const response = await fetch("/login", {
         method: "POST",
         body: JSON.stringify({username,password}),
         });
-        data=await response.json()
+        const data=await response.json()
         if(data.success){
-        router.push("/home/page.js");
+        router.push("/home");
         }else{
             alert(data.message)
         }
@@ -63,12 +64,6 @@ export default function Home() {
                         <button
                             type="submit"
                             className="bg-green-500 text-white rounded-lg hover:bg-green-600 w-full px-2 py-1 mt-5 focus:outline-none focus:ring focus:border-blue-500"
-                            onClick={() => {
-                                try {
-                                    localStorage.setItem("isLoggedIn", "true");
-                                } catch (e) {}
-                                window.location.href = "/home";
-                            }}
                         >
                             Submit to database
                         </button>

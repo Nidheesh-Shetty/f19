@@ -8,7 +8,7 @@ export async function POST(info){
     WHERE username = ${username}
     LIMIT 1
     `
-    if (users.length = 0){
+    if (users.length === 0){
         return NextResponse.json({
           "success": false,
           "message": "No user found"
