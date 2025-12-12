@@ -320,7 +320,7 @@ export default function TrackerPage() {
 
 
     return (
-<div className="min-h-screen border-black bg-fixed bg-linear-to-bl from-[#4a7856] via-[#94ecbe] to-[#4a7856] text-gray-900 bg-[url('/images/backdrop.jpeg')] bg-cover bg-center">
+        <div className="min-h-screen border-black bg-fixed bg-linear-to-bl from-[#4a7856] via-[#94ecbe] to-[#4a7856] text-gray-900 bg-[url('/images/backdrop.jpeg')] bg-cover bg-center">
             <InteractiveBackground />
             <ClientOnly>
                 <DriftingLeaves />
@@ -334,7 +334,10 @@ export default function TrackerPage() {
                         </h1>
                     </div>
                 )}
+
+
                 {/* Navigation */}
+
                 <div className="flex items-center justify-between mx-auto ">
 
 
@@ -373,6 +376,9 @@ export default function TrackerPage() {
                         </div>
                     </div>
 
+
+
+
                     {/* pages */}
                     <div className=" mr-25">
                         <nav className="bg-linear-to-bl from-[#95bf74]/70 from-5% via-[#95bf74]/60 via-50% to-[#4a7856] rounded-4xl p-3 flex items-center justify-center gap-45  shadow-[8px_8px_16px_rgba(0,0,0,0.15),_-8px_-8px_16px_rgba(255,255,255,0.2)]">
@@ -381,8 +387,8 @@ export default function TrackerPage() {
                                     <li className="hover:font-bold hover:underline">
                                         <a href="/home"> Home</a>
                                     </li>
-                                    <li className="font-bold text-[#2E5339] text-shadow-2xs">
-                                        <Link href="#" className="hover:font-bold">Tracker</Link>
+                                    <li className="font-bold">
+                                        <Link href="#" className="hover:font-bold ">Tracker</Link>
                                     </li>
                                     <li className="hover:font-bold hover:underline">
                                         <Link href="/eco" className="hover:font-bold hover:underline">Eco-Insights</Link>
@@ -394,7 +400,9 @@ export default function TrackerPage() {
                             </div>
                         </nav>
                     </div>
-                </div>
+                </div >
+
+
 
                 <main className="mx-auto mt-6 ml-6">
                     <div className="flex items-start mb-6">

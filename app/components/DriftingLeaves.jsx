@@ -12,7 +12,7 @@ export default function DriftingLeaves() {
 
     for (let i = 0; i < numLeaves; i++) {
       const startX = Math.random() * -30;          // random left start
-      const endX = 80 + Math.random() * -50;        // random right exit (80–130vw)
+      const endX = Math.random() * -50;        // random right exit (80–130vw)
       const startY = Math.random() * -50;          // top start
       const endY = 100 + Math.random() * 40;       // bottom exit (100–140vh)
 

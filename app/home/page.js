@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import Nav from "../components/Nav";
 import { useState, useEffect, useRef } from "react";
 import anime from "animejs/lib/anime.es.js";
 import InteractiveBackground from "../components/InteractiveBackground";
@@ -403,7 +404,6 @@ export default function Home() {
 
 
 
-
                 {/* Navigation */}
 
                 <div className="flex items-center justify-between mx-auto ">
@@ -630,7 +630,7 @@ export default function Home() {
 
                         {/* Display Daily quest */}
                         <div className="p-5">
-                            <div className="actions flex flex-col gap-2 mt-4 items-start p-6 bg-gradient-to-bl from-amber-400/20 to-emerald-500/60 rounded-4xl max-w-sm shadow-xl">
+                            <div className="actions flex flex-col gap-2 mt-4 items-start p-6 bg-linear-to-bl from-amber-400/20 to-emerald-500/60 rounded-4xl max-w-sm shadow-xl">
                                 <h1 className="font-bold">Daily quest:</h1>
                                 {actions.map((action, index) => (
                                     <button
