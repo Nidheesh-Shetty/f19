@@ -1,7 +1,7 @@
 import { sql } from "@lib/db.js"
 import { NextResponse } from "next/server";
 
-export async function login(info){
+export async function POST(info){
     const{username, password} = await info.json()
     const users = await sql`
     SELECT * FROM accounts
