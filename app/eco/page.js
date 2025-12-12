@@ -444,7 +444,7 @@ export default function EcoPage() {
 
 
                     {/* Logo */}
-          <Link href="/home" className="hover:font-bold hover:underline"><img src="/images/logo.png" alt="logo" className="w-32 h-auto ml-20" /></Link>
+                    <Link href="/home" className="hover:font-bold hover:underline"><img src="/images/logo.png" alt="logo" className="w-32 h-auto ml-20" /></Link>
 
                     {/* Welcome, plant status and level */}
                     <div
@@ -503,134 +503,134 @@ export default function EcoPage() {
                 {/* Display stats card */}
                 <main className="mx-auto mt-6 ml-6">
                     <div className="flex items-start mb-6">
-                <div className="relative flex items-start justify-between pb-10">
+                        <div className="relative flex items-start justify-between pb-10">
 
-                    <div
-                        ref={cardRef}
-                        className="absolute left-0 top-0 bg-amber-100 drop-shadow-lg rounded-lg px-4 py-6 overflow-hidden transition-all duration-300"
-                        style={{ width: open ? "80px" : "80px" }} // animate width 
-                    >
-                        {/* MINI-BAR */}
-                        {!open && (
-                            <button
-                                onClick={() => setOpen(true)}
-                                className="flex flex-col items-center justify-center bg-amber-100 text-black space-y-7">
-                                <span>👤</span>
-                                <br />
-                                <span className="text-xs">✨</span>
-                                <br />
-
-                                <span className="text-xs">💰</span>
-                            </button>
-                        )}
-                        {/* CONTENT */}
-                        <div ref={contentRef} className="opacity-100">
-                            {open && (
-                                <div className="flex items-start justify-between w-full">
-                                    <div>
-                                        <div className="mb-2">👤Username: <strong>JoeRedd</strong></div>
-                                        <div className="mb-2">Experience: {experience}<strong><div className="w-full bg-gray-200 h-2 rounded-full mt-2">
-                                            <div className="bg-green-500 h-2 rounded-full" style={{ width: `${progressPercent}%` }}></div>
-                                        </div></strong></div>
-                                        <div className="mb-2">ECOins: <strong>{points}</strong></div>
-                                        <button
-                                            onClick={resetPoints}
-                                            className="mt-3 bg-red-400 text-white px-3 py-1 rounded hover:bg-red-700"
-                                        >
-                                            Reset ECoins
-                                        </button>
-                                        <button
-                                            onClick={resetLevel}
-                                            className="mt-3 bg-red-400 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition"
-                                        >
-                                            Reset Level & EXP
-                                        </button>
-                                    </div>
-                                    {/* CLOSE BUTTON */}
+                            <div
+                                ref={cardRef}
+                                className="absolute left-0 top-0 bg-amber-100 drop-shadow-lg rounded-lg px-4 py-6 overflow-hidden transition-all duration-300"
+                                style={{ width: open ? "80px" : "80px" }} // animate width 
+                            >
+                                {/* MINI-BAR */}
+                                {!open && (
                                     <button
-                                        onClick={() => setOpen(false)}
-                                        className="text-xl font-bold px-2 py-1 rounded hover:bg-red-200 transition"
-                                    >
-                                        ||<br />||<br />||<br />||<br />||
+                                        onClick={() => setOpen(true)}
+                                        className="flex flex-col items-center justify-center bg-amber-100 text-black space-y-7">
+                                        <span>👤</span>
+                                        <br />
+                                        <span className="text-xs">✨</span>
+                                        <br />
+
+                                        <span className="text-xs">💰</span>
                                     </button>
+                                )}
+                                {/* CONTENT */}
+                                <div ref={contentRef} className="opacity-100">
+                                    {open && (
+                                        <div className="flex items-start justify-between w-full">
+                                            <div>
+                                                <div className="mb-2">👤Username: <strong>JoeRedd</strong></div>
+                                                <div className="mb-2">Experience: {experience}<strong><div className="w-full bg-gray-200 h-2 rounded-full mt-2">
+                                                    <div className="bg-green-500 h-2 rounded-full" style={{ width: `${progressPercent}%` }}></div>
+                                                </div></strong></div>
+                                                <div className="mb-2">ECOins: <strong>{points}</strong></div>
+                                                <button
+                                                    onClick={resetPoints}
+                                                    className="mt-3 bg-red-400 text-white px-3 py-1 rounded hover:bg-red-700"
+                                                >
+                                                    Reset ECoins
+                                                </button>
+                                                <button
+                                                    onClick={resetLevel}
+                                                    className="mt-3 bg-red-400 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition"
+                                                >
+                                                    Reset Level & EXP
+                                                </button>
+                                            </div>
+                                            {/* CLOSE BUTTON */}
+                                            <button
+                                                onClick={() => setOpen(false)}
+                                                className="text-xl font-bold px-2 py-1 rounded hover:bg-red-200 transition"
+                                            >
+                                                ||<br />||<br />||<br />||<br />||
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    {/* Whether or not, it deepends on whether the weather is weathering - jored :)*/}
+                    <section className="mx-auto max-w-4xl">
+                        <div className="bg-linear-to-bl from-[#95bf74]/70 from-5% via-[#95bf74]/60 via-50% to-[#4a7856] p-5 rounded-2xl shadow-xl">
+                            <div className="flex gap-2">
+                                <input
+                                    className="flex-1 border rounded px-3 py-2"
+                                    placeholder="Enter city or place (e.g. London)"
+                                    value={query}
+                                    onChange={(e) => setQuery(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter") searchPlace(query);
+                                    }}
+                                />
+                                <button
+                                    className="bg-blue-600 text-white px-4 rounded"
+                                    onClick={() => searchPlace(query)}
+                                    disabled={!query || loading}
+                                >
+                                    Search
+                                </button>
+                                <button className="bg-green-600 text-white px-4 rounded" onClick={useMyLocation} disabled={loading}>
+                                    Use my location
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <div className="mb-6">
+                            {loading && (
+                                <div className="text-base font-bold bg-clip-text bg-gradient-to-bl from-[#95bf74]/70 via-[#95bf74]/60 to-[#4a7856]" id="loadingText">
+                                    Loading…
+                                </div>
+                            )}
+                            {error && (
+                                <div className="text-sm text-red-600 font-bold text-shadow-2xs" id="errorText">
+                                    Error: {error}
                                 </div>
                             )}
                         </div>
-                    </div>
-                </div>
-                </div>
 
-
-
-
-                {/* Whether or not, it deepends on whether the weather is weathering - jored :)*/}
-                <section className="mx-auto max-w-4xl">
-                    <div className="bg-linear-to-bl from-[#95bf74]/70 from-5% via-[#95bf74]/60 via-50% to-[#4a7856] p-5 rounded-2xl shadow-xl">
-                        <div className="flex gap-2">
-                            <input
-                                className="flex-1 border rounded px-3 py-2"
-                                placeholder="Enter city or place (e.g. London)"
-                                value={query}
-                                onChange={(e) => setQuery(e.target.value)}
-                                onKeyDown={(e) => {
-                                    if (e.key === "Enter") searchPlace(query);
-                                }}
-                            />
-                            <button
-                                className="bg-blue-600 text-white px-4 rounded"
-                                onClick={() => searchPlace(query)}
-                                disabled={!query || loading}
-                            >
-                                Search
-                            </button>
-                            <button className="bg-green-600 text-white px-4 rounded" onClick={useMyLocation} disabled={loading}>
-                                Use my location
-                            </button>
-                        </div>
-
-                    </div>
-
-                    <div className="mb-6">
-                        {loading && (
-                            <div className="text-base font-bold bg-clip-text bg-gradient-to-bl from-[#95bf74]/70 via-[#95bf74]/60 to-[#4a7856]" id="loadingText">
-                                Loading…
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl">
+                            <div className="bg-linear-to-bl from-amber-400/40 to-emerald-500/80 rounded-4xl max-w-sm shadow-xl p-4">
+                                <div className="text-sm text-[#2E5339] text-shadow-xl font-bold ">Location</div>
+                                <div className="text-lg font-medium">{location ? location.name : "—"}</div>
+                                {location && <div className="text-xs text-[#2E5339] text-shadow-xl font-bold ">    : {location.latitude.toFixed(3)}, Lon: {location.longitude.toFixed(3)}</div>}
                             </div>
-                        )}
-                        {error && (
-                            <div className="text-sm text-red-600 font-bold text-shadow-2xs" id="errorText">
-                                Error: {error}
+
+                            <div className="bg-linear-to-bl from-amber-400/40 to-emerald-500/80 rounded-4xl max-w-sm shadow-xl p-4">
+                                <div className="text-sm text-[#2E5339] text-shadow-xl font-bold ">Temperature</div>
+                                <div className="text-2xl font-semibold">{data?.temperature != null ? `${data.temperature} °C` : "—"}</div>
                             </div>
-                        )}
-                    </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl">
-                        <div className="bg-linear-to-bl from-amber-400/40 to-emerald-500/80 rounded-4xl max-w-sm shadow-xl p-4">
-                            <div className="text-sm text-[#2E5339] text-shadow-xl font-bold ">Location</div>
-                            <div className="text-lg font-medium">{location ? location.name : "—"}</div>
-                            {location && <div className="text-xs text-[#2E5339] text-shadow-xl font-bold ">    : {location.latitude.toFixed(3)}, Lon: {location.longitude.toFixed(3)}</div>}
-                        </div>
-
-                        <div className="bg-linear-to-bl from-amber-400/40 to-emerald-500/80 rounded-4xl max-w-sm shadow-xl p-4">
-                            <div className="text-sm text-[#2E5339] text-shadow-xl font-bold ">Temperature</div>
-                            <div className="text-2xl font-semibold">{data?.temperature != null ? `${data.temperature} °C` : "—"}</div>
-                        </div>
-
-                        <div className="bg-linear-to-bl from-amber-400/40 to-emerald-500/80 rounded-4xl max-w-sm shadow-xl p-4">
-                            <div className="text-sm text-[#2E5339] text-shadow-xl font-bold ">Humidity</div>
-                            <div className="text-2xl font-semibold">{data?.humidity != null ? `${data.humidity} %` : "—"}</div>
-                        </div>
-
-                        <div className="bg-linear-to-bl from-amber-400/40 to-emerald-500/80 rounded-4xl max-w-sm shadow-xl p-4 md:col-span-2">
-                            <div className="text-sm text-[#2E5339] text-shadow-xl font-bold ">UV Index</div>
-                            <div className="text-3xl font-bold text-amber-600 text-shadow-2xl">{data?.uv != null ? data.uv : "—"}</div>
-                            <div className="text-xs text-[#2E5339] text-shadow-xl font-bold mt-2">Time: {data?.time ?? "—"}</div>
-                            <div className="text-sm text-[#2E5339] text-shadow-xl font-bold mt-2">
-                                UV index guidance: 0–2 Low, 3–5 Moderate, 6–7 High, 8–10 Very High, 11+ Extreme.
+                            <div className="bg-linear-to-bl from-amber-400/40 to-emerald-500/80 rounded-4xl max-w-sm shadow-xl p-4">
+                                <div className="text-sm text-[#2E5339] text-shadow-xl font-bold ">Humidity</div>
+                                <div className="text-2xl font-semibold">{data?.humidity != null ? `${data.humidity} %` : "—"}</div>
                             </div>
-                        </div>
 
-                    </div>
-                </section>
+                            <div className="bg-linear-to-bl from-amber-400/40 to-emerald-500/80 rounded-4xl max-w-sm shadow-xl p-4 md:col-span-2">
+                                <div className="text-sm text-[#2E5339] text-shadow-xl font-bold ">UV Index</div>
+                                <div className="text-3xl font-bold text-amber-600 text-shadow-2xl">{data?.uv != null ? data.uv : "—"}</div>
+                                <div className="text-xs text-[#2E5339] text-shadow-xl font-bold mt-2">Time: {data?.time ?? "—"}</div>
+                                <div className="text-sm text-[#2E5339] text-shadow-xl font-bold mt-2">
+                                    UV index guidance: 0–2 Low, 3–5 Moderate, 6–7 High, 8–10 Very High, 11+ Extreme.
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
                 </main>
             </main>
         </div>

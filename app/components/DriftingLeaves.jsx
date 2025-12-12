@@ -7,12 +7,12 @@ export default function DriftingLeaves() {
   const [leaves, setLeaves] = useState([]);
 
   useEffect(() => {
-    const numLeaves = 12;
+    const numLeaves = 30;
     const arr = [];
 
     for (let i = 0; i < numLeaves; i++) {
       const startX = Math.random() * -30;          // random left start
-      const endX = Math.random() * -50;        // random right exit (80–130vw)
+      const endX = Math.random() * 50;        // random right exit (80–130vw)
       const startY = Math.random() * -50;          // top start
       const endY = 100 + Math.random() * 40;       // bottom exit (100–140vh)
 

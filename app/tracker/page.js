@@ -462,9 +462,6 @@ export default function TrackerPage() {
                             </div>
 
 
-
-
-
                             {/* Middle Text — stays fixed
                             <span className="ml-[400px] flex items-center">
                                 <span className="text-lg font-semibold text-amber-700 flex gap-2">
@@ -489,10 +486,9 @@ export default function TrackerPage() {
 
 
                         </div>
-
                     </div>
-                    <section className="mx-auto max-w-4xl p-5">
 
+                    <section className="mx-auto max-w-4xl p-5">
                         {/* Tracker UI */}
                         {/* Daily Goals */}
                         <section className="bg-linear-to-b from-[#dff1dd]/80 to-[#7ba66a]/30 p-5 rounded-2xl shadow-xlbg-gray-50 shadow mb-6">
@@ -507,7 +503,7 @@ export default function TrackerPage() {
                                 <button onClick={handleAddDailyGoal} className="bg-green-600 text-white px-4 py-2 rounded">Add</button>
                             </div>
                             <ul className="list-disc pl-5">
-                                {dailyGoals.length === 0 && <li className="text-sm text-gray-500">No daily goals yet</li>}
+                                {dailyGoals.length === 0 && <li className="text-sm text-[#2E5339] font-bold">No daily goals yet</li>}
                                 {dailyGoals.map((g, i) => (
                                     <li key={i} className="flex items-center justify-between gap-4 mb-1">
                                         <span>{g}</span>
@@ -535,7 +531,7 @@ export default function TrackerPage() {
                             </div>
 
                             <ul className="list-disc pl-5">
-                                {yearlyGoals.length === 0 && <li className="text-sm text-gray-500">No yearly goals yet</li>}
+                                {yearlyGoals.length === 0 && <li className="text-sm text-[#2E5339] font-bold">No yearly goals yet</li>}
                                 {yearlyGoals.map((g, i) => (
                                     <li key={i} className="flex items-center justify-between gap-4 mb-1">
                                         <span>{g}</span>
