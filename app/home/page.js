@@ -384,7 +384,7 @@ export default function Home() {
 
     return (
 
-<div className="min-h-screen border-black bg-fixed bg-linear-to-bl from-[#4a7856] via-[#94ecbe] to-[#4a7856] text-gray-900 bg-[url('/images/backdrop.jpeg')] bg-cover bg-center">
+        <div className="min-h-screen border-black bg-fixed bg-linear-to-bl from-[#4a7856] via-[#94ecbe] to-[#4a7856] text-gray-900 bg-[url('/images/backdrop.jpeg')] bg-cover bg-center">
             <InteractiveBackground />
             <ClientOnly>
                 <DriftingLeaves />
@@ -459,7 +459,7 @@ export default function Home() {
                                         <Link href="/eco" className="hover:font-bold hover:underline">Eco-Insights</Link>
                                     </li>
                                     <li className="hover:font-bold hover:underline">
-                                        <Link href="/profile" className="hover:font-bold hover:underline">Explore</Link>
+                                        <Link href="/explore" className="hover:font-bold hover:underline">Explore</Link>
                                     </li>
                                 </ul>
                             </div>
@@ -574,7 +574,7 @@ export default function Home() {
                     <section className="mx-auto max-w-4xl ">
 
                         {/* Display Daily Goals */}
-                        <div className="bg-gradient-to-bl from-amber-400/30 to-emerald-500/55 p-5 rounded-2xl shadow-xl">
+                        <div className="bg-gradient-to-bl from-amber-400/30 to-emerald-500/55 p-5 rounded-2xl shadow-xl mb-5">
                             <h1 className="font-bold mb-2">Daily Goals: <Link href="/tracker" className="hover:font-bold hover:underline">✎</Link></h1>
                             <ul className="list-disc pl-5 bg-indigo-300/40 p-2 rounded-2xl">
                                 {dailyGoals.length === 0 && (
@@ -594,6 +594,28 @@ export default function Home() {
                                             </button>
                                             <button
                                                 onClick={() => handleRemoveDailyGoal(i)}
+                                                className="text-sm text-red-600">
+                                                Remove
+                                            </button>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {/* Display yearly Goals */}
+                        <div className="bg-gradient-to-bl from-amber-400/30 to-emerald-500/55 p-5 rounded-2xl shadow-xl">
+                            <h1 className="font-bold mb-2">yearly Goals: <Link href="/tracker" className="hover:font-bold hover:underline">✎</Link></h1>
+                            <ul className="list-disc pl-5 bg-indigo-300/40 p-2 rounded-2xl">
+                                {yearlyGoals.length === 0 && (
+                                    <li className="text-sm text-gray-500">No yearly goals yet</li>
+                                )}
+                                {yearlyGoals.map((g, i) => (
+                                    <li key={i} className="flex items-center justify-between gap-4 mb-1">
+                                        <span>{g}</span>
+                                        <div className="flex gap-2">
+                                            <button
+                                                onClick={() => handleRemoveYearlyGoal(i)}
                                                 className="text-sm text-red-600">
                                                 Remove
                                             </button>

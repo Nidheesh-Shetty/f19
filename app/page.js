@@ -1,12 +1,13 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "motion/react"
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen relative bg-fixed bg-cover bg-center text-gray-900"
-         style={{ backgroundImage: "url('/images/backdrop.jpeg')" }}>
-      
+      style={{ backgroundImage: "url('/images/backdrop.jpeg')" }}>
+
       {/* Decorative drifting leaves */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-10">
         <div className="absolute w-8 h-8 bg-[url('/images/leaf.png')] bg-contain bg-no-repeat opacity-80 animate-[float_10s_linear_infinite]" style={{ left: "10%", top: "-5%" }}></div>
@@ -41,7 +42,7 @@ export default function LandingPage() {
           </a>
         </div>
 
-        
+
       </main>
 
       {/* Floating animation keyframes */}

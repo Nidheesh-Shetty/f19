@@ -386,7 +386,7 @@ export default function TrackerPage() {
                                         <Link href="/eco" className="hover:font-bold hover:underline">Eco-Insights</Link>
                                     </li>
                                     <li className="hover:font-bold hover:underline">
-                                        <Link href="/profile" className="hover:font-bold hover:underline">Explore</Link>
+                                        <Link href="/explore" className="hover:font-bold hover:underline">Explore</Link>
                                     </li>
                                 </ul>
                             </div>
@@ -481,7 +481,7 @@ export default function TrackerPage() {
                         </div>
 
                     </div>
-                    <section className="mx-auto max-w-4xl ">
+                    <section className="mx-auto max-w-4xl p-5">
 
                         {/* Tracker UI */}
                         {/* Daily Goals */}
