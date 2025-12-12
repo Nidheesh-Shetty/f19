@@ -462,9 +462,6 @@ export default function TrackerPage() {
                             </div>
 
 
-
-
-
                             {/* Middle Text — stays fixed
                             <span className="ml-[400px] flex items-center">
                                 <span className="text-lg font-semibold text-amber-700 flex gap-2">
@@ -489,10 +486,9 @@ export default function TrackerPage() {
 
 
                         </div>
-
                     </div>
-                    <section className="mx-auto max-w-4xl p-5">
 
+                    <section className="mx-auto max-w-4xl p-5">
                         {/* Tracker UI */}
                         {/* Daily Goals */}
                         <section className="bg-linear-to-b from-[#dff1dd]/80 to-[#7ba66a]/30 p-5 rounded-2xl shadow-xlbg-gray-50 shadow mb-6">

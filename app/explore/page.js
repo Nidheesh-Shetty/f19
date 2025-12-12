@@ -733,9 +733,13 @@ export default function TrackerPage() {
 
             </div>
             <div className="min-h-screen bg-linear-to-b from-[#dff1dd]/80 to-[#7ba66a]/30 p-10 mx-auto max-w-4xl rounded-4xl">
-              <h1 className="text-4xl font-bold text-[#2E5339] mb-8">
+              <div className="text-4xl font-bold text-[#2E5339] mb-8">
                 Explore Eco-Friendly Communities 🌱
-              </h1>
+                 <p className="text-sm font-light pt-1">
+                This explore page is your friendly guide to finding eco-friendly communities—because saving the planet is way easier when you’re not doing it alone in your room with one sad houseplant. Discover groups, projects, and people who make sustainable living feel less overwhelming and a lot more fun.
+              </p>
+              </div>
+             
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {clubs.map((club, i) => (
@@ -784,7 +788,9 @@ export default function TrackerPage() {
                   </div>
                 ))}
               </div>
+              <h1 className="font-bold flex items-center justify-center pt-5 text-4xl">More Clubs coming soon...</h1>
             </div>
+            
 
           </div>
 
