@@ -8,6 +8,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DriftingLeaves from "../components/DriftingLeaves";
 import ClientOnly from "../components/ClientOnly.jsx";
+import { motion } from "motion/react"
+
 
 
 export default function TrackerPage() {
