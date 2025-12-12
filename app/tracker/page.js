@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Nav from "../components/Nav";
 
 
 export default function TrackerPage() {
@@ -103,23 +104,8 @@ export default function TrackerPage() {
                     {/* Logo */}
                     <img src="/images/logo.png" alt="logo" className="w-32 h-45" />
 
-                    {/* pages */}
-                     <nav className="bg-emerald-500 rounded-2xl margin p-2">
-                        <ul className="flex items-center gap-4 text-gray-900 ">
-                            <li className="hover:font-bold hover:underline">
-                                <a href="/home"> Home</a>
-                            </li>
-                            <li className="font-bold">
-                                <Link href="#" className="font-bold">Tracker</Link>
-                            </li>
-                            <li className="hover:font-bold hover:underline">
-                                <Link href="/eco" className="hover:font-bold hover:underline">Eco-Insights</Link>
-                            </li>
-                            <li className="hover:font-bold hover:underline">
-                                <Link href="/profile" className="hover:font-bold hover:underline">Profile</Link>
-                            </li>
-                        </ul>
-                    </nav>
+                    {/* shared Nav */}
+                    <Nav />
                 </div>
             </header>
 

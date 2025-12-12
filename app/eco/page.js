@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Nav from "../components/Nav";
 
 export default function EcoPage() {
     const [query, setQuery] = useState("");
@@ -112,31 +113,13 @@ export default function EcoPage() {
 
     return (
         <div className="min-h-screen bg-slate-50 text-slate-900 p-6">
-            <header className="max-w-3xl mx-auto">
-                <div className="flex items-center justify-between mb-6">
+            <header className="max-w-4xl mx-auto">
+                <div className="flex items-center justify-between max-w-4xl mx-auto mb-6">
                     <div className="flex items-center gap-4">
-                        <img src="/images/logo.png" alt="logo" className="w-28 h-auto" />
+                        <img src="/images/logo.png" alt="logo" className="w-32 h-45" />
                         <h1 className="text-2xl font-semibold">Eco Insights — Air & UV</h1>
                     </div>
-                    <nav>
-                        <ul className="flex items-center gap-4 text-sm">
-                            <li>
-                                <Link href="/home" className="hover:underline">Home</Link>
-                            </li>
-                            <li>
-                                <Link href="/tracker" className="hover:underline">Tracker</Link>
-                            </li>
-                            <li>
-                                <Link href="/eco" className="font-semibold underline">Eco-Insights</Link>
-                            </li>
-                            <li>
-                                <Link href="/profile" className="hover:underline">Profile</Link>
-                            </li>
-                            <li>
-                                <Link href="/login" className="hover:underline">Login</Link>
-                            </li>
-                        </ul>
-                    </nav>
+                    <Nav />
                 </div>
 
                 <div className="bg-white shadow rounded-lg p-4 mb-6">
