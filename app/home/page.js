@@ -16,7 +16,6 @@ import { motion } from "motion/react"
 export default function Home() {
 
     {/* your variables */ }
-    const [cursorImage, setCursorImage] = useState("/images/cursor.png");
     const [dailyGoals, setDailyGoals] = useState([]);
     const [yearlyGoals, setYearlyGoals] = useState([]);
     const [dailyInput, setDailyInput] = useState("");
@@ -30,6 +29,10 @@ export default function Home() {
     const [milestoneText, setMilestoneText] = useState("");
     const [showMilestone, setShowMilestone] = useState(false);
     const [triggeredMilestones, setTriggeredMilestones] = useState([]);
+    const [completed, setCompleted] = useState([]);
+    const [selectedClub, setSelectedClub] = useState(null);
+    const [joinedClubs, setJoinedClubs] = useState([]);
+    const [selectedClubIndex, setSelectedClubIndex] = useState(null);
     const prevLevelRef = useRef(level);
     const textRef = useRef(null);
     const arrowRef = useRef(null);
@@ -37,6 +40,8 @@ export default function Home() {
     const [open, setOpen] = useState(true);
     const cardRef = useRef(null);
     const contentRef = useRef(null);
+    const buttonRefs = useRef([]);
+    const [ownedBadges, setOwnedBadges] = useState([]);
 
     {/* local storage - persistence */ }
     useEffect(() => {
@@ -48,6 +53,9 @@ export default function Home() {
             const savedOpen = localStorage.getItem("cardOpen");
             const savedLevel = localStorage.getItem("level");
             const savedTitle = localStorage.getItem("levelTitle");
+            const savedBadges = localStorage.getItem("ownedBadges");
+            const saved = localStorage.getItem("joinedClubs");
+
 
             if (storedDaily) setDailyGoals(JSON.parse(storedDaily));
             if (storedYearly) setYearlyGoals(JSON.parse(storedYearly));
@@ -58,6 +66,8 @@ export default function Home() {
                 setLevel(parseInt(savedLevel)); prevLevelRef.current = parseInt(savedLevel);
                 if (savedTitle) setLevelTitle(savedTitle);
             }
+            if (savedBadges) setOwnedBadges(JSON.parse(savedBadges));
+            if (saved) { setJoinedClubs(JSON.parse(saved)); }
             setLoaded(true); // <-- IMPORTANT
         } catch (err) {
             console.error("LocalStorage load failed:", err);
@@ -96,9 +106,10 @@ export default function Home() {
         if (!loaded) return;
         localStorage.setItem("levelTitle", levelTitle);
     }, [levelTitle, loaded]);
-
-
-
+    useEffect(() => {
+        if (!loaded) return;
+        localStorage.setItem("joinedClubs", JSON.stringify(joinedClubs));
+    }, [joinedClubs, loaded]);
 
     {/* Point System */ }
     const resetPoints = () => {
@@ -224,7 +235,6 @@ export default function Home() {
 
 
 
-
     {/* Daily Goals */ }
     const handleCompleteDailyGoal = (index) => {
         // Add points and experience for a single goal
@@ -336,13 +346,41 @@ export default function Home() {
     const refreshQuests = () => {
         setActions(getRandomQuests());
     };
+    const handleClick = (index, points) => {
+        if (!completed.includes(index)) {
+            addPoints(points);
+            // Animate the button
+            anime({
+                targets: buttonRefs.current[index],
+                scale: [1, 0.95, 1],
+                backgroundColor: "#9CA3AF", // gray-400
+                color: "#E5E7EB", // gray-200
+                duration: 400,
+                easing: "easeOutQuad",
+            });
 
+            setCompleted([...completed, index]);
+        }
+    };
+
+    const handleRefresh = () => {
+        refreshQuests();
+        setCompleted([]);
+
+        // Reset all button styles
+        buttonRefs.current.forEach((btn) => {
+            if (btn) {
+                btn.style.backgroundColor = "";
+                btn.style.color = "";
+                btn.style.transform = "";
+            }
+        });
+    };
 
 
 
 
     {/* Card */ }
-
     useEffect(() => {
         if (!cardRef.current || !contentRef.current) return;
         if (open) {
@@ -378,6 +416,159 @@ export default function Home() {
             });
         }
     }, [open]);
+
+
+
+    const clubs = [
+        {
+            name: "Eco Youth Community",
+            desc: "A student-driven group focused on cleaning drives and zero-waste events.",
+            tags: ["Sustainability", "Youth", "Community"],
+            image: "/images/Eco_Youth_Community.png",
+            badge: "/images/badge1.png"
+        },
+        {
+            name: "Green Innovators SG",
+            desc: "Tech-forward organization developing environmental solutions.",
+            tags: ["Technology", "Innovation", "Climate"],
+            image: "/images/eco2.png",
+            badge: "/images/badge2.png"
+        },
+        {
+            name: "Urban Garden Club",
+            desc: "Helping Singaporeans grow food sustainably in urban spaces.",
+            tags: ["Gardening", "Food", "Nature"],
+            image: "/images/eco3.png",
+            badge: "/images/badge3.png"
+        }
+    ];
+
+
+    const purchaseBadge = (clubIndex, cost = 10) => {
+        // Check if already owned
+        const alreadyOwned = ownedBadges.some(b => b.clubIndex === clubIndex);
+
+        if (alreadyOwned) {
+            // UNOWN - Remove the badge and refund ECOins
+            const refundAmount = cost;
+            setPoints(prev => prev + refundAmount);
+
+            const newOwned = ownedBadges.filter(b => b.clubIndex !== clubIndex);
+            setOwnedBadges(newOwned);
+            localStorage.setItem("ownedBadges", JSON.stringify(newOwned));
+
+            toast.info(`🔄 Badge removed! ${refundAmount} ECOins refunded.`, {
+                position: "top-left",
+                autoClose: 2000,
+                style: {
+                    background: "#e0f2fe",
+                    color: "#0c4a6e",
+                    border: "1px solid #0c4a6e",
+                    fontWeight: "bold",
+                },
+            });
+            return;
+        }
+
+        // OWN - Purchase the badge
+        if (points < cost) {
+            toast.error("❌ Not enough ECOins!", {
+                position: "top-left",
+                autoClose: 2000,
+                style: {
+                    background: "#f8d7da",
+                    color: "#721c24",
+                    border: "1px solid #721c24",
+                    fontWeight: "bold",
+                },
+            });
+            return;
+        }
+
+        // Deduct points
+        setPoints(prev => prev - cost);
+
+        // Add badge to owned badges with full info
+        const badgeData = {
+            badge: clubs[clubIndex].badge,
+            clubIndex: clubIndex,
+            clubName: clubs[clubIndex].name
+        };
+        const newOwned = [...ownedBadges, badgeData];
+        setOwnedBadges(newOwned);
+        localStorage.setItem("ownedBadges", JSON.stringify(newOwned));
+
+        toast.success(`🎉 Badge purchased for ${cost} ECOins!`, {
+            position: "top-left",
+            autoClose: 2000,
+            style: {
+                background: "#dbf9b8",
+                color: "#4a7856",
+                border: "1px solid #4a7856",
+                fontWeight: "bold",
+            },
+        });
+    };
+
+
+
+
+
+
+    const refreshBadges = () => {
+        try {
+            const savedBadges = localStorage.getItem("ownedBadges");
+            if (savedBadges) {
+                const parsed = JSON.parse(savedBadges);
+                console.log("Manually refreshed badges:", parsed);
+                setOwnedBadges(parsed);
+                toast.success("✅ Badges refreshed!", {
+                    position: "top-right",
+                    autoClose: 1000,
+                });
+            } else {
+                console.log("No badges in localStorage");
+                setOwnedBadges([]);
+            }
+        } catch (err) {
+            console.error("Failed to refresh badges:", err);
+            toast.error("❌ Failed to load badges");
+        }
+    };
+
+    useEffect(() => {
+        const handleVisibilityChange = () => {
+            if (!document.hidden) {
+                // Page is now visible - reload badges from localStorage
+                try {
+                    const savedBadges = localStorage.getItem("ownedBadges");
+                    if (savedBadges) {
+                        const parsed = JSON.parse(savedBadges);
+                        console.log("Reloading badges:", parsed);
+                        setOwnedBadges(parsed);
+                    }
+                } catch (err) {
+                    console.error("Failed to reload badges:", err);
+                }
+            }
+        };
+
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+
+        return () => {
+            document.removeEventListener("visibilitychange", handleVisibilityChange);
+        };
+    }, []);
+
+    useEffect(() => {
+        console.log("Owned Badges:", ownedBadges);
+        console.log("Loaded:", loaded);
+    }, [ownedBadges, loaded]);
+    useEffect(() => {
+        if (!loaded) return;
+        localStorage.setItem("ownedBadges", JSON.stringify(ownedBadges));
+    }, [ownedBadges, loaded]);
+
 
 
 
@@ -470,12 +661,13 @@ export default function Home() {
 
 
                 <main className="mx-auto mt-6 ml-6">
-                    <div className="flex items-start mb-6">
+                    <div className="grid grid-cols-[auto_1fr_auto] gap-6 items-start mb-6">
 
 
 
                         {/* Display stats card */}
-                        <div className="relative flex items-start justify-between pb-10">
+                        <div className="relative flex items-start pb-10">
+
                             <div
                                 ref={cardRef}
                                 className="absolute left-0 top-0 bg-amber-100 drop-shadow-lg rounded-lg px-4 py-6 overflow-hidden transition-all duration-300"
@@ -526,24 +718,78 @@ export default function Home() {
                                             </button>
                                         </div>
                                     )}
+
+                                </div>
+                            </div>
+
+
+
+                            <div className="bg-linear-to-bl from-[#dff1dd]/70 to-[#7ba66a]/50 rounded-4xl p-3 mx-20 ">
+                                <div>
+                                    <div className="bg-linear-to-bl from-[#95bf74]/70 from-5% via-[#95bf74]/60 via-50% to-[#4a7856] rounded-4xl p-3">
+                                        <h2 className="text-xl font-bold text-[#2E5339] mb-3">Joined Clubs</h2>
+
+                                        {joinedClubs.length === 0 ? (
+                                            <p className="text-[#2E5339]/70">You haven't joined any clubs yet.</p>
+                                        ) : (
+                                            joinedClubs.map((index) => (
+                                                <div key={index} className="p-3 bg-white/20 rounded-xl mb-2">
+                                                    <h3 className="text-lg font-semibold text-[#2E5339]">
+                                                        {clubs[index].name}
+                                                    </h3>
+                                                    <p className="text-sm text-[#2E5339]/80">
+                                                        {clubs[index].desc}
+                                                    </p>
+                                                </div>
+                                            ))
+                                        )}
+                                    </div>
+
+                                    <div className="bg-linear-to-bl from-[#95bf74]/70 from-5% via-[#95bf74]/60 via-50% to-[#4a7856] rounded-4xl p-3 mt-4">
+                                        <div className="flex justify-between items-center mb-3">
+                                            <h2 className="text-xl font-bold text-[#2E5339]">Your Badges</h2>
+                                            <button
+                                                onClick={refreshBadges}
+                                                className="text-sm bg-[#2E5339] text-white px-3 py-1 rounded-lg hover:bg-[#24452f] transition"
+                                            >
+                                                🔄 Refresh
+                                            </button>
+                                        </div>
+
+                                        {!loaded ? (
+                                            <p className="text-[#2E5339]/70">Loading...</p>
+                                        ) : ownedBadges.length === 0 ? (
+                                            <p className="text-[#2E5339]/70">No badges purchased yet. Visit Explore to buy badges!</p>
+                                        ) : (
+                                            <div className="flex flex-wrap gap-4">
+                                                {ownedBadges.map((item, idx) => (
+                                                    <div key={idx} className="text-center">
+                                                        <img
+                                                            src={item.badge}
+                                                            alt={item.clubName || "Badge"}
+                                                            className="w-20 h-20 rounded-full object-cover border-2 border-[#2E5339]"
+                                                            onError={(e) => {
+                                                                console.error("Failed to load badge image:", item.badge);
+                                                                e.target.src = "/images/placeholder-badge.png";
+                                                            }}
+                                                        />
+                                                        <p className="text-sm text-[#2E5339] mt-1 font-medium">
+                                                            {item.clubName || "Unknown"}
+                                                        </p>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+
                                 </div>
                             </div>
 
 
 
 
-                            <button
-                                onClick={() => setExperience(prev => prev + 10)}
-                                className="mt-5 px-4 py-2 bg-blue-500 text-white rounded"
-                            >
-                                Gain 10 EXP
-                            </button>
-
-
-
-
                             {/* Middle Text — stays fixed */}
-                            <span className="ml-[400px] flex items-center">
+                            <span className="flex items-center">
                                 <span className="text-lg font-semibold text-amber-700 flex gap-2">
                                     Plant progress:
                                     <h2 className="text-amber-950">
@@ -556,9 +802,8 @@ export default function Home() {
 
 
 
-
                             {/* Tree Image — stays fixed */}
-                            <div className="ml-6">
+                            <div>
                                 <Image
                                     src={`/images/${getTreeStage(points)}`}
                                     width={200}
@@ -575,27 +820,34 @@ export default function Home() {
                     <section className="mx-auto max-w-4xl ">
 
                         {/* Display Daily Goals */}
-                        <div className="bg-gradient-to-bl from-amber-400/30 to-emerald-500/55 p-5 rounded-2xl shadow-xl mb-5">
-                            <h1 className="font-bold mb-2">Daily Goals: <Link href="/tracker" className="hover:font-bold hover:underline">✎</Link></h1>
-                            <ul className="list-disc pl-5 bg-indigo-300/40 p-2 rounded-2xl">
+                        <div className="bg-linear-to-b from-[#dff1dd]/80 to-[#7ba66a]/30 p-5 rounded-2xl shadow-xl mb-5">
+                            <h1 className="font-bold mb-2">
+                                Daily Goals: <Link href="/tracker" className="hover:font-bold hover:underline">✎</Link>
+                            </h1>
+                            <ul className="list-disc pl-5 bg-linear-to-tr from-[#dff1dd]/80 to-[#7ba66a]/70 p-2 rounded-2xl">
                                 {dailyGoals.length === 0 && (
-                                    <li className="text-sm text-gray-500">No daily goals yet</li>
+                                    <li className="text-sm text-gray-500 ">No daily goals yet</li>
                                 )}
                                 {dailyGoals.map((g, i) => (
-                                    <li key={i} className="flex items-center justify-between gap-4 mb-1">
+                                    <li
+                                        key={i}
+                                        className="flex items-center justify-between gap-4 mb-3 p-3 bg-indigo-300/40 rounded-2xl shadow-md"
+                                    >
                                         <span>{g}</span>
-                                        <div className="flex gap-2">
+                                        <div className="flex gap-2 items-center justify-center">
                                             <button
                                                 onClick={() => {
                                                     handleCompleteDailyGoal(i);
                                                     addExperience(10);
                                                 }}
-                                                className="text-green-700 text-sm">
+                                                className="text-green-700 text-sm bg-gradient-to-bl from-amber-400/10 to-emerald-500/35 px-2 rounded-2xl shadow"
+                                            >
                                                 Complete
                                             </button>
                                             <button
                                                 onClick={() => handleRemoveDailyGoal(i)}
-                                                className="text-sm text-red-600">
+                                                className="text-sm text-red-600 bg-gradient-to-bl from-amber-400/10 to-emerald-500/35 px-2 rounded-2xl shadow"
+                                            >
                                                 Remove
                                             </button>
                                         </div>
@@ -605,9 +857,9 @@ export default function Home() {
                         </div>
 
                         {/* Display yearly Goals */}
-                        <div className="bg-gradient-to-bl from-amber-400/30 to-emerald-500/55 p-5 rounded-2xl shadow-xl">
+                        <div className="bg-linear-to-b from-[#dff1dd]/80 to-[#7ba66a]/30 p-5 rounded-2xl shadow-xl">
                             <h1 className="font-bold mb-2">yearly Goals: <Link href="/tracker" className="hover:font-bold hover:underline">✎</Link></h1>
-                            <ul className="list-disc pl-5 bg-indigo-300/40 p-2 rounded-2xl">
+                            <ul className="list-disc pl-5 bg-linear-to-tr from-[#dff1dd]/80 to-[#7ba66a]/70 p-2 rounded-2xl">
                                 {yearlyGoals.length === 0 && (
                                     <li className="text-sm text-gray-500">No yearly goals yet</li>
                                 )}
@@ -635,14 +887,19 @@ export default function Home() {
                                 {actions.map((action, index) => (
                                     <button
                                         key={index}
-                                        className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg w-full transition"
-                                        onClick={() => addPoints(action.points)}
+                                        ref={(el) => (buttonRefs.current[index] = el)}
+                                        onClick={() => handleClick(index, action.points)}
+                                        disabled={completed.includes(index)}
+                                        className={`px-4 py-2 rounded-lg w-full transition
+              ${completed.includes(index)
+                                                ? "bg-gray-400 cursor-not-allowed text-gray-200"
+                                                : "bg-green-600 hover:bg-green-700 text-white"}`}
                                     >
                                         {action.name} (+{action.points})
                                     </button>
                                 ))}
                                 <button
-                                    onClick={refreshQuests}
+                                    onClick={handleRefresh}
                                     className="mt-3 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg w-full transition"
                                 >
                                     Refresh Quests

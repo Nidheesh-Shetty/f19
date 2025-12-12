@@ -26,3 +26,6 @@ body {
   cursor: url('/images/cursor.png'), auto;
     
 }
+html, body {
+  background: url('/images/backdrop.jpeg') center/cover no-repeat fixed;
+}

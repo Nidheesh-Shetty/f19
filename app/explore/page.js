@@ -30,6 +30,9 @@ export default function TrackerPage() {
   const [showMilestone, setShowMilestone] = useState(false);
   const [triggeredMilestones, setTriggeredMilestones] = useState([]);
   const [selectedClub, setSelectedClub] = useState(null);
+  const [joinedClubs, setJoinedClubs] = useState([]);
+  const [selectedClubIndex, setSelectedClubIndex] = useState(null);
+  const buttonRefs = useRef([]);
   const textRef = useRef(null);
   const arrowRef = useRef(null);
   const confettiRef = useRef(null);
@@ -48,6 +51,7 @@ export default function TrackerPage() {
       const storedExperience = localStorage.getItem("experience")
       const savedOpen = localStorage.getItem("cardOpen");
       const savedBadges = localStorage.getItem("ownedBadges");
+      const saved = localStorage.getItem("joinedClubs");
 
       if (storedDaily) setDailyGoals(JSON.parse(storedDaily));
       if (storedYearly) setYearlyGoals(JSON.parse(storedYearly));
@@ -55,6 +59,7 @@ export default function TrackerPage() {
       if (storedExperience) setExperience(JSON.parse(storedExperience));
       if (savedOpen !== null) setOpen(savedOpen === "true");
       if (savedBadges) setOwnedBadges(JSON.parse(savedBadges));
+      if (saved) { setJoinedClubs(JSON.parse(saved)); }
 
       setLoaded(true); // <-- IMPORTANT
     } catch (err) {
@@ -84,6 +89,10 @@ export default function TrackerPage() {
     if (!loaded) return;
     localStorage.setItem("cardOpen", open);
   }, [open, loaded]);
+  useEffect(() => {
+    if (!loaded) return;
+    localStorage.setItem("joinedClubs", JSON.stringify(joinedClubs));
+  }, [joinedClubs, loaded]);
 
 
   {/* ECOins System */ }
@@ -110,45 +119,6 @@ export default function TrackerPage() {
       }
     })
   };
-  const purchaseBadge = (badge, cost = 10) => {
-    if (points < cost) {
-      // Not enough ECOins
-      toast.error("❌ Not enough ECOins!", {
-        position: "top-left",
-        autoClose: 2000,
-        style: {
-          background: "#f8d7da",
-          color: "#721c24",
-          border: "1px solid #721c24",
-          fontWeight: "bold",
-        },
-      });
-      return;
-    }
-
-    // Deduct points
-    setPoints(prev => prev - cost);
-    localStorage.setItem("points", JSON.stringify(points - cost));
-
-    // Add badge to owned badges
-    const newOwned = [...ownedBadges, badge];
-    setOwnedBadges(newOwned);
-    localStorage.setItem("ownedBadges", JSON.stringify(newOwned));
-
-    // Success toast
-    toast.success(`🎉 Successfully purchased ${badge} for ${cost} ECOins!`, {
-      position: "top-left",
-      autoClose: 2000,
-      style: {
-        background: "#dbf9b8",
-        color: "#4a7856",
-        border: "1px solid #4a7856",
-        fontWeight: "bold",
-      },
-    });
-  };
-
-
 
 
 
@@ -361,6 +331,8 @@ export default function TrackerPage() {
 
 
 
+
+
   const clubs = [
     {
       name: "Eco Youth Community",
@@ -374,16 +346,90 @@ export default function TrackerPage() {
       desc: "Tech-forward organization developing environmental solutions.",
       tags: ["Technology", "Innovation", "Climate"],
       image: "/images/eco2.png",
-      badge: "eco2"
+      badge: "/images/badge2.png"
     },
     {
       name: "Urban Garden Club",
       desc: "Helping Singaporeans grow food sustainably in urban spaces.",
       tags: ["Gardening", "Food", "Nature"],
       image: "/images/eco3.png",
-      badge: "eco3"
+      badge: "/images/badge3.png"
     }
   ];
+
+  const purchaseBadge = (clubIndex, cost = 10) => {
+    // Check if already owned
+    const alreadyOwned = ownedBadges.some(b => b.clubIndex === clubIndex);
+
+    if (alreadyOwned) {
+      // UNOWN - Remove the badge and refund ECOins
+      const refundAmount = cost;
+      setPoints(prev => prev + refundAmount);
+
+      const newOwned = ownedBadges.filter(b => b.clubIndex !== clubIndex);
+      setOwnedBadges(newOwned);
+      localStorage.setItem("ownedBadges", JSON.stringify(newOwned));
+
+      toast.info(`🔄 Badge removed! ${refundAmount} ECOins refunded.`, {
+        position: "top-left",
+        autoClose: 2000,
+        style: {
+          background: "#e0f2fe",
+          color: "#0c4a6e",
+          border: "1px solid #0c4a6e",
+          fontWeight: "bold",
+        },
+      });
+      return;
+    }
+
+    // OWN - Purchase the badge
+    if (points < cost) {
+      toast.error("❌ Not enough ECOins!", {
+        position: "top-left",
+        autoClose: 2000,
+        style: {
+          background: "#f8d7da",
+          color: "#721c24",
+          border: "1px solid #721c24",
+          fontWeight: "bold",
+        },
+      });
+      return;
+    }
+
+    // Deduct points
+    setPoints(prev => prev - cost);
+
+    // Add badge to owned badges with full info
+    const badgeData = {
+      badge: clubs[clubIndex].badge,
+      clubIndex: clubIndex,
+      clubName: clubs[clubIndex].name
+    };
+    const newOwned = [...ownedBadges, badgeData];
+    setOwnedBadges(newOwned);
+    localStorage.setItem("ownedBadges", JSON.stringify(newOwned));
+
+    toast.success(`🎉 Badge purchased for ${cost} ECOins!`, {
+      position: "top-left",
+      autoClose: 2000,
+      style: {
+        background: "#dbf9b8",
+        color: "#4a7856",
+        border: "1px solid #4a7856",
+        fontWeight: "bold",
+      },
+    });
+  };
+
+
+
+
+
+
+
+
 
   useEffect(() => {
     if (selectedClub && modalRef.current) {
@@ -400,6 +446,28 @@ export default function TrackerPage() {
     }
   }, [selectedClub]);
 
+
+  const handleToggleJoin = (clubName, index) => {
+    const isJoined = joinedClubs.includes(index);
+
+    // Anime.js animation
+    anime({
+      targets: buttonRefs.current[index],
+      scale: [1, 0.92, 1],
+      duration: 350,
+      easing: "easeOutQuad",
+    });
+
+    if (isJoined) {
+      setJoinedClubs((prev) =>
+        prev.filter((i) => i !== index)
+      );
+      toast.info(`You left ${clubName}`);
+    } else {
+      setJoinedClubs((prev) => [...prev, index]);
+      toast.success(`You joined ${clubName}`);
+    }
+  };
 
 
 
@@ -433,7 +501,7 @@ export default function TrackerPage() {
         >
           <div
             ref={modalRef}
-            className="bg-gradient-to-b from-[#dff1dd]/80 to-[#7ba66a] rounded-2xl p-6 max-w-lg w-full relative shadow-xl"
+            className="bg-linear-to-b from-[#dff1dd]/80 to-[#7ba66a] rounded-2xl p-6 max-w-lg w-full relative shadow-xl"
             onClick={(e) => e.stopPropagation()}
             style={{
               transform: "translateX(-100vw) scaleX(0.5) scaleY(1.5)", // start pulled left
@@ -467,11 +535,20 @@ export default function TrackerPage() {
             </div>
             <div className="flex items-center gap-4 justify-between">
               <button
-
-                className="inline-block px-4 py-2 bg-green-700 text-white rounded hover:bg-green-900"
+                ref={(el) => (buttonRefs.current[selectedClubIndex] = el)}
+                onClick={() =>
+                  handleToggleJoin(selectedClub.name, selectedClubIndex)
+                }
+                className={`w-76 py-2 rounded-xl text-white font-medium transition
+    ${joinedClubs.includes(selectedClubIndex)
+                    ? "bg-red-500 hover:bg-red-600"   // Unjoin color
+                    : "bg-[#2E5339] hover:bg-[#24452f]" // Join color
+                  }
+  `}
               >
-                Join Club
+                {joinedClubs.includes(selectedClubIndex) ? "Leave Club" : "Join Club"}
               </button>
+
               <div className="relative w-32 h-32">
                 <img
                   src={selectedClub.badge}
@@ -479,17 +556,22 @@ export default function TrackerPage() {
                   className="w-32 h-32 object-cover rounded-full"
                 />
                 <button
-                  onClick={() => purchaseBadge(selectedClub.badge, 10)} // 10 ECOins cost
-                  className="w-25  absolute top-25 right-27 bg-green-700 text-white text-xs px-2 py-1 rounded-2xl rounded-tr hover:bg-green-900"
+                  onClick={() => purchaseBadge(selectedClubIndex, 10)}
+                  className={`w-25 absolute top-25 right-27 text-white text-xs px-2 py-1 rounded-2xl rounded-tr transition ${ownedBadges.some(b => b.clubIndex === selectedClubIndex)
+                      ? "bg-orange-600 hover:bg-orange-700"
+                      : "bg-green-700 hover:bg-green-900"
+                    }`}
                 >
-                  Buy (10 ECOins)
+                  {ownedBadges.some(b => b.clubIndex === selectedClubIndex) ? "Remove (Refund)" : "Buy (10 ECOins)"}
                 </button>
-              </div>
+              </div>  
             </div>
 
           </div>
         </div>
       )}
+
+
       <main className="relative z-10">
 
         {showMilestone && milestoneText && (
@@ -650,7 +732,7 @@ export default function TrackerPage() {
 
 
             </div>
-            <div className="min-h-screen bg-gradient-to-b from-[#dff1dd]/80 to-[#7ba66a]/30 p-10 mx-auto max-w-4xl rounded-4xl">
+            <div className="min-h-screen bg-linear-to-b from-[#dff1dd]/80 to-[#7ba66a]/30 p-10 mx-auto max-w-4xl rounded-4xl">
               <h1 className="text-4xl font-bold text-[#2E5339] mb-8">
                 Explore Eco-Friendly Communities 🌱
               </h1>
@@ -683,7 +765,7 @@ export default function TrackerPage() {
                       {club.tags.map((tag, idx) => (
                         <span
                           key={idx}
-                          className="px-3 py-1 rounded-full text-xs bg-[#7ba66a]/20 text-[#2E5339]"
+                          className="px-3 py-1 rounded-full text-xs bg-green-200/60 text-[#2E5339]"
                         >
                           {tag}
                         </span>
@@ -692,7 +774,10 @@ export default function TrackerPage() {
 
                     <button
                       className="w-full py-2 rounded-xl bg-[#2E5339] text-white font-medium hover:bg-[#24452f] transition"
-                      onClick={() => setSelectedClub(club)}
+                      onClick={() => {
+                        setSelectedClub(club);
+                        setSelectedClubIndex(i);
+                      }}
                     >
                       Learn More
                     </button>
