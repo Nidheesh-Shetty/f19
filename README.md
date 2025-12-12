@@ -1,3 +1,16 @@
+1) Open the github repo
+2) Open vs codes
+3) Open a folder of your choice
+4) Clone the repo in that folder
+5) Install libraries: 
+- npm install motion
+- npm install animejs
+- npm install react-toastify
+- npm install next react react-dom
+
+6)  npm run dev
+7) open locally
+
 # Eco Tracker
 Eco Tracker is a gamified website designed to help users build sustainable habits. Users can track their daily eco-friendly actions, complete quests, collect ECOins, monitor plant growth progress, and view environmental insights.
 
