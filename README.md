@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Eco Tracker
+Eco Tracker is a gamified website designed to help users build sustainable habits. Users can track their daily eco-friendly actions, complete quests, collect ECOins, monitor plant growth progress, and view environmental insights.
+Front Page
+The front page displays the website name and a brief description of what Eco Tracker does.
+ Two buttons are displayed:
+Login (dark green with white text)
+Register (white with dark green text)
 
-## Getting Started
 
-First, run the development server:
+Register Page
+The register page contains:
+Name input
+Password input
+Register button (green with white text)
+Back button (small, black with white text)
+Registering stores the name and password in a database.
+Login Page
+The login page contains the same fields as the register page. If the username and password match a stored account, the user is taken to the homepage. If not, an error message can be shown.
+Homepage
+The homepage layout includes:
+Header
+Logo on the top left
+Top middle shows:
+Username
+Plant progress (Seedling or Sprout)
+Level
+Level 1: Rookie
+Level 2: Not a Rookie
+Level 3: Eco Explorer
+Level 4: Green Advocate
+Experience
+EXP counter (blue rectangular button with white text)
+Right middle shows plant progress text and a drawing of the current plant stage
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Statistics Panel (Left Side)
+Username
+Experience with a progress bar (green when filled, white when empty)
+ECOins
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Two red buttons (white text):
+Reset ECOins
+Reset Levels & EXP
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+Daily Goals
+An input where the user can enter one daily goal
+Completing the goal grants 10 EXP
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Daily Quests
+Three green buttons showing quests and their ECOin rewards (displayed in brackets)
+One blue button to refresh the quests
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Explore Page
+Displays three communities. Each community card includes:
+An image
+The community name
+A short description
+Clicking on a community opens its website.
+Tracker Page
+Contains the same features as the daily goals and daily quests sections:
+One daily goal input (10 EXP on completion)
+Three green quest buttons
+One blue refresh button
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+Profile Page
+Allows the user to upload a profile picture by dragging an image file into the site.
+Eco Insights Page
+Contains a search bar that allows users to enter a location such as "London".
+ After searching, the page displays:
+Location
+Temperature
+Humidity
+UV Index
+Users may also allow the website to access their current location to display local data.
+
+
