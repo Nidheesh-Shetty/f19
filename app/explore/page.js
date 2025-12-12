@@ -788,7 +788,7 @@ export default function TrackerPage() {
                   </div>
                 ))}
               </div>
-              <h1 className="font-bold flex items-center justify-center pt-5 text-4xl">More Clubs coming soon...</h1>
+              <h1 className="font-bold flex items-center justify-center pt-5 text-4xl">More communities coming soon...</h1>
             </div>
             
 
