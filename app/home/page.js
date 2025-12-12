@@ -6,7 +6,8 @@ import anime from "animejs/lib/anime.es.js";
 import InteractiveBackground from "../components/InteractiveBackground";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import DriftingLeaves from "../components/DriftingLeaves";
+import ClientOnly from "../components/ClientOnly.jsx";
 
 
 
@@ -131,7 +132,7 @@ export default function Home() {
         { level: 2, exp: 30, title: "Not a Rookie" },
         { level: 3, exp: 50, title: "Eco Explorer" },
         { level: 4, exp: 80, title: "Green Advocate" },
-        { level: 5, exp: 120, title: "Going Faster Than I Imagined" },
+        { level: 5, exp: 120, title: "  " },
         { level: 6, exp: 170, title: "Eco Enthusiast" },
         { level: 7, exp: 230, title: "Planet Protector" },
         { level: 8, exp: 300, title: "Green Guardian" },
@@ -383,8 +384,12 @@ export default function Home() {
 
     return (
 
-        <div className="min-h-screen border-black bg-linear-to-bl from-[#4a7856] via-[#94ecbe] to-[#4a7856] text-gray-900 bg-[url('/images/backdrop.jpeg')] bg-cover bg-center ">
+<div className="min-h-screen border-black bg-fixed bg-linear-to-bl from-[#4a7856] via-[#94ecbe] to-[#4a7856] text-gray-900 bg-[url('/images/backdrop.jpeg')] bg-cover bg-center">
             <InteractiveBackground />
+            <ClientOnly>
+                <DriftingLeaves />
+            </ClientOnly>
+
             <main className="relative z-10">
 
                 {showMilestone && milestoneText && (
@@ -397,6 +402,7 @@ export default function Home() {
 
 
 
+
                 {/* Navigation */}
 
                 <div className="flex items-center justify-between mx-auto ">
@@ -405,17 +411,37 @@ export default function Home() {
                     {/* Logo */}
                     <img src="/images/logo.png" alt="logo" className="w-32 h-auto ml-20 " />
 
-                    {/* Welcome + level */}
-                    <div className="bg-linear-to-b from-[#dff1dd]/80 to-[#7ba66a]/30 rounded-4xl p-3 flex items-center justify-center gap-45 shadow-[8px_8px_16px_rgba(0,0,0,0.15),_-8px_-8px_20px_rgba(255,255,255,0.5)] transition-all duration-300 hover:shadow-[10px_10px_20px_rgba(0,0,0,0.15),_-10px_-10px_20px_rgba(255,255,255,0.6)]" >
-                        <span className="text-2xl pl-7">
-                            <h1 className="font-bold text-2xl">Welcome:</h1> {levelTitle}!!
-                        </span>
 
-                        <span className="text-xl pr-5">
+                    {/* Welcome, plant status and level */}
+                    <div
+                        className="
+    bg-linear-to-b from-[#dff1dd]/80 to-[#7ba66a]/30
+    rounded-4xl p-4
+    shadow-[8px_8px_16px_rgba(0,0,0,0.15),_-8px_-8px_20px_rgba(255,255,255,0.5)]
+    hover:shadow-[10px_10px_20px_rgba(0,0,0,0.15),_-10px_-10px_20px_rgba(255,255,255,0.6)]
+    transition-all duration-300
+    w-[500px]
+    flex items-center justify-between">
+                        {/* Left section */}
+                        <div className="flex flex-col ">
+                            <h1 className="font-bold text-2xl">Welcome:</h1>
+                            <span className="text-xl">{levelTitle}!!</span>
+                        </div>
+
+                        {/* Center section */}
+                        <div className="flex flex-col text-right">
+                            <span className="text-lg font-semibold text-amber-700">
+                                Plant progress:
+                            </span>
+                            <span className="text-amber-950 text-lg">
+                                {treeStage(getTreeStage(points))}
+                            </span>
+                        </div>
+                        {/* Right section */}
+                        <div className="text-xl font-semibold pr-2">
                             Level: {level}
-                        </span>
+                        </div>
                     </div>
-
 
 
                     {/* pages */}
@@ -433,7 +459,7 @@ export default function Home() {
                                         <Link href="/eco" className="hover:font-bold hover:underline">Eco-Insights</Link>
                                     </li>
                                     <li className="hover:font-bold hover:underline">
-                                        <Link href="/profile" className="hover:font-bold hover:underline">Profile</Link>
+                                        <Link href="/profile" className="hover:font-bold hover:underline">Explore</Link>
                                     </li>
                                 </ul>
                             </div>

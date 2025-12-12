@@ -24,8 +24,5 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
   cursor: url('/images/cursor.png'), auto;
-}
-
-button {
-  cursor: url('/images/cursor-pick.png'), auto;
+    
 }
