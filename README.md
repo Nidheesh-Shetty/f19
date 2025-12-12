@@ -1,25 +1,17 @@
-Eco Tracker
+# Eco Tracker
 Eco Tracker is a gamified website designed to help users build sustainable habits. Users can track their daily eco-friendly actions, complete quests, collect ECOins, monitor plant growth progress, and view environmental insights.
-Front Page
+
+# Front Page
 The front page displays the website name and a brief description of what Eco Tracker does.
- Two buttons are displayed:
-Login (dark green with white text)
-Register (white with dark green text)
+ One button is displayed:
+Enter dashboard (enters to homepage)
 
 
-Register Page
-The register page contains:
-Name input
-Password input
-Register button (green with white text)
-Back button (small, black with white text)
-Registering stores the name and password in a database.
-Login Page
-The login page contains the same fields as the register page. If the username and password match a stored account, the user is taken to the homepage. If not, an error message can be shown.
-Homepage
+# Homepage
 The homepage layout includes:
 Header
 Logo on the top left
+
 Top middle shows:
 Username
 Plant progress (Seedling or Sprout)
@@ -30,31 +22,32 @@ Level 3: Eco Explorer
 Level 4: Green Advocate
 Experience
 EXP counter (blue rectangular button with white text)
+
 Right middle shows plant progress text and a drawing of the current plant stage
 
 
-Statistics Panel (Left Side)
+# Statistics Panel (Left Side)
 Username
 Experience with a progress bar (green when filled, white when empty)
 ECOins
 
 
-Two red buttons (white text):
+Two red buttons (white text and for experiment only):
 Reset ECOins
 Reset Levels & EXP
 
 
-Daily Goals
+# Daily Goals
 An input where the user can enter one daily goal
 Completing the goal grants 10 EXP
 
 
-Daily Quests
+# Daily Quests
 Three green buttons showing quests and their ECOin rewards (displayed in brackets)
 One blue button to refresh the quests
 
 
-Explore Page
+# Explore Page
 Displays three communities. Each community card includes:
 An image
 The community name
@@ -67,7 +60,7 @@ Three green quest buttons
 One blue refresh button
 
 
-Profile Page
+# Profile Page
 Allows the user to upload a profile picture by dragging an image file into the site.
 Eco Insights Page
 Contains a search bar that allows users to enter a location such as "London".
