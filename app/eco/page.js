@@ -603,7 +603,7 @@ export default function EcoPage() {
                             )}
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mb-7">
                             <div className="bg-linear-to-bl from-amber-400/40 to-emerald-500/80 rounded-4xl max-w-sm shadow-xl p-4">
                                 <div className="text-sm text-[#2E5339] text-shadow-xl font-bold ">Location</div>
                                 <div className="text-lg font-medium">{location ? location.name : "—"}</div>
